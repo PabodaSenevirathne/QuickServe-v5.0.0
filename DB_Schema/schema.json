@@ -1,0 +1,50 @@
+{
+  "products": {
+    "_id": "object",
+    "productId": "string",
+    "description": "string",
+    "image": "string",
+    "price": "number",
+    "shippingCost": "number",
+    "__v": "number"
+  },
+  "carts": {
+    "_id": "object",
+    "cartId": "string",
+    "products": "object",
+    "quantities": "object",
+    "user": "string",
+    "__v": "number"
+  },
+  "users": {
+    "_id": "object",
+    "userId": "number",
+    "email": "string",
+    "password": "string",
+    "userName": "string",
+    "firstName": "string",
+    "lastName": "string",
+    "shippingAddress": "string",
+    "__v": "number"
+  },
+  "comments": {
+    "_id": "object",
+    "commentId": "string",
+    "product": "string",
+    "user": "string",
+    "rating": "number",
+    "image": "string",
+    "text": "string",
+    "__v": "number"
+  },
+  "orders": {
+    "_id": "object",
+    "orderId": "string",
+    "products": "object",
+    "quantities": "object",
+    "user": "string",
+    "totalAmount": "number",
+    "orderDate": "object",
+    "__v": "number"
+  }
+}
