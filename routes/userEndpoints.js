@@ -18,7 +18,13 @@ console.log(JWT_SECRET);
 // Register endpoint
 router.post('/register', [
     check('email', 'Valid email is required').isEmail(),
-    check('password', 'Password must be at least 6 characters').isLength({ min: 6 })
+    check('password', 'Password must be at least 6 characters').isLength({ min: 6 }),
+    check('confirmPassword', 'Passwords do not match').custom((value, { req }) => {
+      if (value !== req.body.password) {
+        throw new Error('Passwords do not match');
+      }
+      return true;
+    })
   ], async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -52,9 +58,9 @@ router.post('/register', [
       if (!isPasswordValid) {
         return res.status(401).json({ message: 'Invalid credentials' });
       }
-      const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: '1h' });
-    res.json({ message: 'Login Sucessfull', token });
-      // res.json({ token });
+      const token = jwt.sign({ userId: user.userId }, JWT_SECRET, { expiresIn: '1h' }); 
+      console.log('Generated Token:', token); // Add this line to log the token
+      res.json({ message: 'Login Successful', token });
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: 'Server error' });
