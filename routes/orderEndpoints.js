@@ -37,11 +37,11 @@ router.get('/user/:userId', async (req, res) => {
 
 // POST a new order
 router.post('/', async (req, res) => {
-    const { products, quantities, user, totalAmount } = req.body;
+    const { products, quantities, userId, totalAmount } = req.body;
     try {
         // Generate a unique 4-digit order ID
         const orderId = Math.floor(1000 + Math.random() * 9000);
-        const newOrder = new Order({ orderId, products, quantities, user, totalAmount });
+        const newOrder = new Order({ orderId, products, quantities, user: userId, totalAmount });
         await newOrder.save();
         res.status(201).json(newOrder);
     } catch (err) {
