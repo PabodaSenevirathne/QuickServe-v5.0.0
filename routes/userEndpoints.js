@@ -67,6 +67,26 @@ router.post('/register', [
     }
   });
 
+// Route to check if an email address is already registered
+router.get('/check-email', async (req, res) => {
+  try {
+    const email = req.query.email;
+    const existingUser = await User.findOne({ email });
+
+    if (existingUser) {
+      // Email address is already registered
+      res.json({ exists: true });
+    } else {
+      // Email address is available
+      res.json({ exists: false });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+
 
 // GET all users
 router.get('/', async (req, res) => {
