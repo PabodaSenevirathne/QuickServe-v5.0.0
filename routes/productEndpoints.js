@@ -67,6 +67,32 @@ router.post('/', upload.single('image'), async (req, res) => {
       res.status(500).send('Server Error');
     }
   });
+
+// GET a product image by ID
+router.get('/:productId/image', async (req, res) => {
+  try {
+    const product = await Product.findOne({ productId: req.params.productId });
+
+    if (!product) {
+      return res.status(404).json({ msg: 'Product not found' });
+    }
+
+    const imagePath = path.join(__dirname, '..', product.image);
+
+    // Check if the image file exists
+    if (!fs.existsSync(imagePath)) {
+      return res.status(404).json({ msg: 'Image not found' });
+    }
+
+    // Set appropriate headers for the image response
+    res.sendFile(imagePath);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
+
+
   
   // GET a single product by ID with image data
   router.get('/:productId', async (req, res) => {
