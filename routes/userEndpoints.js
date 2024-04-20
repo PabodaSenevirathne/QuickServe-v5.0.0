@@ -59,7 +59,7 @@ router.post('/register', [
         return res.status(401).json({ message: 'Invalid credentials' });
       }
       const token = jwt.sign({ userId: user.userId }, JWT_SECRET, { expiresIn: '1h' }); 
-      console.log('Generated Token:', token); // Add this line to log the token
+      console.log('Generated Token:', token);
       res.json({ message: 'Login Successful', token });
     } catch (error) {
       console.error(error);
